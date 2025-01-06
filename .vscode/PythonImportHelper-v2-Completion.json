@@ -1,0 +1,274 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "session",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "csv",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "csv",
+        "description": "csv",
+        "detail": "csv",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "TfidfVectorizer",
+        "importPath": "sklearn.feature_extraction.text",
+        "description": "sklearn.feature_extraction.text",
+        "isExtraImport": true,
+        "detail": "sklearn.feature_extraction.text",
+        "documentation": {}
+    },
+    {
+        "label": "LogisticRegression",
+        "importPath": "sklearn.linear_model",
+        "description": "sklearn.linear_model",
+        "isExtraImport": true,
+        "detail": "sklearn.linear_model",
+        "documentation": {}
+    },
+    {
+        "label": "nltk",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "nltk",
+        "description": "nltk",
+        "detail": "nltk",
+        "documentation": {}
+    },
+    {
+        "label": "ssl",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ssl",
+        "description": "ssl",
+        "detail": "ssl",
+        "documentation": {}
+    },
+    {
+        "label": "chatbot_response",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def chatbot_response(input_text):\n    \"\"\"Generates a response from the chatbot based on user input.\"\"\"\n    input_text = vectorizer.transform([input_text])\n    tag = clf.predict(input_text)[0]\n    for intent in intents:\n        if intent['tag'] == tag:\n            response = random.choice(intent['responses'])\n            return response\n    return \"Sorry, I didn't understand that.\"\n# Routes",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def home():\n    \"\"\"Renders the homepage and initializes chat history.\"\"\"\n    if 'chat_history' not in session:\n        session['chat_history'] = []\n    return render_template('bot_entry.html', chat_history=session['chat_history'])\n@app.route('/index')\ndef index_page():\n    \"\"\"Serve the index page dynamically when the user clicks on the bot icon\"\"\"\n    if 'chat_history' not in session:\n        session['chat_history'] = []",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "index_page",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def index_page():\n    \"\"\"Serve the index page dynamically when the user clicks on the bot icon\"\"\"\n    if 'chat_history' not in session:\n        session['chat_history'] = []\n    return render_template('index.html', chat_history=session['chat_history'])\n@app.route('/get_response', methods=['POST'])\ndef get_response():\n    \"\"\"Handles user input, generates a response, and stores the conversation.\"\"\"\n    user_input = request.json.get('user_input', '')\n    if not user_input.strip():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_response",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_response():\n    \"\"\"Handles user input, generates a response, and stores the conversation.\"\"\"\n    user_input = request.json.get('user_input', '')\n    if not user_input.strip():\n        return jsonify({'response': \"Please enter a valid message.\"})\n    response = chatbot_response(user_input)\n    # Save conversation to session\n    timestamp = datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\")\n    chat_message = {'user': user_input, 'bot': response, 'timestamp': timestamp}\n    session['chat_history'].append(chat_message)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "get_history",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def get_history():\n    \"\"\"Returns chat history.\"\"\"\n    chat_history = session.get('chat_history', [])\n    return jsonify({'history': chat_history})\n@app.route('/about')\ndef about():\n    \"\"\"Renders the About page.\"\"\"\n    return render_template('about.html')\n@app.route('/history')\ndef conversation_history():",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "about",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def about():\n    \"\"\"Renders the About page.\"\"\"\n    return render_template('about.html')\n@app.route('/history')\ndef conversation_history():\n    conversation = []\n    try:\n        # Read the chat log CSV file\n        with open('chat_log.csv', 'r', encoding='utf-8') as csvfile:\n            csv_reader = csv.reader(csvfile)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "conversation_history",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def conversation_history():\n    conversation = []\n    try:\n        # Read the chat log CSV file\n        with open('chat_log.csv', 'r', encoding='utf-8') as csvfile:\n            csv_reader = csv.reader(csvfile)\n            next(csv_reader)  # Skip the header row\n            for row in csv_reader:\n                conversation.append({\n                    'user': row[0],",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\napp.secret_key = 'your_secret_key'\n# Download and setup\nssl._create_default_https_context = ssl._create_unverified_context\nnltk.data.path.append(os.path.abspath(\"nltk_data\"))\nnltk.download('punkt')\n# Load intents from JSON\nfile_path = os.path.abspath(\"./intents.json\")\nwith open(file_path, \"r\") as file:\n    intents = json.load(file)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.secret_key",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.secret_key = 'your_secret_key'\n# Download and setup\nssl._create_default_https_context = ssl._create_unverified_context\nnltk.data.path.append(os.path.abspath(\"nltk_data\"))\nnltk.download('punkt')\n# Load intents from JSON\nfile_path = os.path.abspath(\"./intents.json\")\nwith open(file_path, \"r\") as file:\n    intents = json.load(file)\n# Vectorizer and model setup",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "ssl._create_default_https_context",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "ssl._create_default_https_context = ssl._create_unverified_context\nnltk.data.path.append(os.path.abspath(\"nltk_data\"))\nnltk.download('punkt')\n# Load intents from JSON\nfile_path = os.path.abspath(\"./intents.json\")\nwith open(file_path, \"r\") as file:\n    intents = json.load(file)\n# Vectorizer and model setup\nvectorizer = TfidfVectorizer()\nclf = LogisticRegression(random_state=0, max_iter=10000)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "file_path = os.path.abspath(\"./intents.json\")\nwith open(file_path, \"r\") as file:\n    intents = json.load(file)\n# Vectorizer and model setup\nvectorizer = TfidfVectorizer()\nclf = LogisticRegression(random_state=0, max_iter=10000)\n# Preprocess data\ntags = []\npatterns = []\nfor intent in intents:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "vectorizer",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "vectorizer = TfidfVectorizer()\nclf = LogisticRegression(random_state=0, max_iter=10000)\n# Preprocess data\ntags = []\npatterns = []\nfor intent in intents:\n    for pattern in intent['patterns']:\n        tags.append(intent['tag'])\n        patterns.append(pattern)\n# Train model",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "clf",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "clf = LogisticRegression(random_state=0, max_iter=10000)\n# Preprocess data\ntags = []\npatterns = []\nfor intent in intents:\n    for pattern in intent['patterns']:\n        tags.append(intent['tag'])\n        patterns.append(pattern)\n# Train model\nx = vectorizer.fit_transform(patterns)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "tags",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "tags = []\npatterns = []\nfor intent in intents:\n    for pattern in intent['patterns']:\n        tags.append(intent['tag'])\n        patterns.append(pattern)\n# Train model\nx = vectorizer.fit_transform(patterns)\ny = tags\nclf.fit(x, y)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "patterns",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "patterns = []\nfor intent in intents:\n    for pattern in intent['patterns']:\n        tags.append(intent['tag'])\n        patterns.append(pattern)\n# Train model\nx = vectorizer.fit_transform(patterns)\ny = tags\nclf.fit(x, y)\ndef chatbot_response(input_text):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "x = vectorizer.fit_transform(patterns)\ny = tags\nclf.fit(x, y)\ndef chatbot_response(input_text):\n    \"\"\"Generates a response from the chatbot based on user input.\"\"\"\n    input_text = vectorizer.transform([input_text])\n    tag = clf.predict(input_text)[0]\n    for intent in intents:\n        if intent['tag'] == tag:\n            response = random.choice(intent['responses'])",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "y",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "y = tags\nclf.fit(x, y)\ndef chatbot_response(input_text):\n    \"\"\"Generates a response from the chatbot based on user input.\"\"\"\n    input_text = vectorizer.transform([input_text])\n    tag = clf.predict(input_text)[0]\n    for intent in intents:\n        if intent['tag'] == tag:\n            response = random.choice(intent['responses'])\n            return response",
+        "detail": "app",
+        "documentation": {}
+    }
+]

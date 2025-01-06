@@ -1,0 +1,8 @@
+Flask
+pandas
+google-generativeai
+sqlalchemy
+rapidfuzz
+scikit-learn
+numpy
+pymysql
